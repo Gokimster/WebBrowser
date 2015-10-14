@@ -13,15 +13,27 @@ namespace WebBrowser
     public partial class GUI : Form
     {
         FavouritesMgr fMgr;
+        HomePageMgr hpMgr;
         public GUI()
         {
             InitializeComponent();
-            address.KeyDown += new KeyEventHandler(address_KeyDown);
             fMgr = new FavouritesMgr();
-            popuateFavourites();
+            popluateFavourites();
+            hpMgr = new HomePageMgr();
+            loadHomePage();
         }
 
-        private void popuateFavourites()
+        private void loadHomePage()
+        {
+            string pageUrl = hpMgr.getHomePageUrl();
+            if (pageUrl!= null)
+            {
+                loadPage(pageUrl);
+                address.Text = pageUrl;
+            }
+        }
+
+        private void popluateFavourites()
         {
             foreach(Favourite f in fMgr.getFavourites().Values)
             {
@@ -32,7 +44,7 @@ namespace WebBrowser
         private void addFavToMenu(Favourite f)
         {
             ToolStripButton temp = new ToolStripButton(f.name);
-            temp.Click += (s, e) => { loadPage(f.url); };
+            temp.Click += (s, e) => { loadPage(f.url);address.Text = f.url; };
             favMenu.DropDownItems.Add(temp);
         }
 
@@ -56,6 +68,11 @@ namespace WebBrowser
         private void loadPage(string url)
         {
             pageContent.Text = WebManager.getPage(url);
+        }
+
+        private void homeBtn_Click(object sender, EventArgs e)
+        {
+            hpMgr.setHomePage(address.Text);
         }
     }
 }

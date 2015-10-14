@@ -129,7 +129,7 @@
             this.address.Size = new System.Drawing.Size(705, 20);
             this.address.TabIndex = 1;
             this.address.Text = "Enter Address";
-            this.address.KeyDown += new System.Windows.Forms.KeyEventHandler(address_KeyDown);
+            this.address.KeyDown += new System.Windows.Forms.KeyEventHandler(this.address_KeyDown);
             // 
             // backBtn
             // 
@@ -171,6 +171,7 @@
             this.homeBtn.Size = new System.Drawing.Size(25, 23);
             this.homeBtn.TabIndex = 5;
             this.homeBtn.UseVisualStyleBackColor = true;
+            this.homeBtn.Click += new System.EventHandler(this.homeBtn_Click);
             // 
             // tabControl1
             // 

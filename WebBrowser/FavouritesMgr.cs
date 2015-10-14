@@ -8,27 +8,16 @@ using System.Xml.Linq;
 
 namespace WebBrowser
 {
-    public class FavouritesMgr
+    public class FavouritesMgr:PersistenceMgr
     {
-        private XElement favXML;
-        private string favFileName;
         private Dictionary<int, Favourite> favs;
 
         public FavouritesMgr()
         {
-            favFileName = "..\\..\\Favourites.xml";
-            try
-            {
-                favXML = XElement.Load(favFileName);
-            }
-            catch (FileNotFoundException e)
-            {
-                createXMLDoc("Favourites");
-                favXML = XElement.Load(favFileName);
-            }
+            initXML("Favourtites");
 
             favs = new Dictionary<int, Favourite>();
-            foreach(var f in favXML.Elements())
+            foreach(var f in xmlElem.Elements())
             {
                 favs[int.Parse(f.Element("Id").Value)] = new Favourite(f.Element("Url").Value, f.Element("Name").Value);
             }
@@ -46,20 +35,8 @@ namespace WebBrowser
 
         private void addFavToFile(int id, Favourite f)
         {
-            favXML.Add(new XElement("Favourite", new XElement("Id", id), new XElement("Url", f.url), new XElement("Name", f.name)));
-            favXML.Save(favFileName);
-        }
-
-        private static void createXMLDoc(string name)
-        {
-            XNamespace empNM = "urn:lst-emp:emp";
-
-            XDocument xDoc = new XDocument(
-                        new XDeclaration("1.0", "UTF-16", null),
-                        new XElement(empNM + name));
-
-            // Save to Disk
-            xDoc.Save("..\\..\\"+name+".xml");
+            xmlElem.Add(new XElement("Favourite", new XElement("Id", id), new XElement("Url", f.url), new XElement("Name", f.name)));
+            xmlElem.Save(fileName);
         }
 
         public Dictionary<int, Favourite> getFavourites()

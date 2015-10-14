@@ -12,18 +12,35 @@ namespace WebBrowser
 {
     public partial class GUI : Form
     {
+        FavouritesMgr fMgr;
         public GUI()
         {
             InitializeComponent();
             address.KeyDown += new KeyEventHandler(address_KeyDown);
-            //address.Click += new EventHandler(address_Click);
+            fMgr = new FavouritesMgr();
+            popuateFavourites();
+        }
+
+        private void popuateFavourites()
+        {
+            foreach(Favourite f in fMgr.getFavourites().Values)
+            {
+                addFavToMenu(f);
+            }
+        }
+
+        private void addFavToMenu(Favourite f)
+        {
+            ToolStripButton temp = new ToolStripButton(f.name);
+            temp.Click += (s, e) => { loadPage(f.url); };
+            favMenu.DropDownItems.Add(temp);
         }
 
         private void address_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-               pageContent.Text= WebManager.getPage(address.Text);
+                loadPage(address.Text);
             }
         }
         private void address_GotFocus(object sender, KeyEventArgs e)
@@ -31,6 +48,14 @@ namespace WebBrowser
             address.SelectAll();
         }
 
+        private void favBtn_Click(object sender, EventArgs e)
+        {
+            fMgr.addFavourite(address.Text, "test");
+        }
 
+        private void loadPage(string url)
+        {
+            pageContent.Text = WebManager.getPage(url);
+        }
     }
 }

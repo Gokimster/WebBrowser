@@ -12,29 +12,35 @@ namespace WebBrowser
     {
         public static string getPage(string address)
         {
-            string urlAddress = "http://google.com";
+            try {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(address);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Stream receiveStream = response.GetResponseStream();
+                    StreamReader readStream = null;
 
-            if (response.StatusCode == HttpStatusCode.OK)
+                    if (response.CharacterSet == null)
+                    {
+                        readStream = new StreamReader(receiveStream);
+                    }
+                    else
+                    {
+                        readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                    }
+
+                    string data = readStream.ReadToEnd();
+                    response.Close();
+                    readStream.Close();
+                    return data;
+                }
+            }catch (WebException e) {
+                return e.Message;
+            }
+            catch (UriFormatException e)
             {
-                Stream receiveStream = response.GetResponseStream();
-                StreamReader readStream = null;
-
-                if (response.CharacterSet == null)
-                {
-                    readStream = new StreamReader(receiveStream);
-                }
-                else
-                {
-                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                }
-
-                string data = readStream.ReadToEnd();
-                return data;
-                response.Close();
-                readStream.Close();
+                return e.Message;
             }
             return "error";
         }

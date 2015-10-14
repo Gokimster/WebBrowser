@@ -1795,7 +1795,7 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAD0mUMO+T9KxX+6wQ10qwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="bookmarkBtn.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="favBtn.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAB9AAAAfQCAYAAACaOMR5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAGYktHRAD/AP8A/6C9p5MAAOUySURBVHhe7N0NtF5nXef9niSNDU1Jta22CmWmhRlKVQRH3oRB

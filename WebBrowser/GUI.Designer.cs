@@ -37,15 +37,16 @@
             this.bookmarksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addThisToToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.favMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.address = new System.Windows.Forms.TextBox();
             this.backBtn = new System.Windows.Forms.Button();
             this.fwdBtn = new System.Windows.Forms.Button();
-            this.bookmarkBtn = new System.Windows.Forms.Button();
+            this.favBtn = new System.Windows.Forms.Button();
             this.homeBtn = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.pageContent = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -56,7 +57,8 @@
             this.menuStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.menuStrip1.Font = new System.Drawing.Font("Market Deco", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.favMenu});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(829, 24);
@@ -114,6 +116,12 @@
             this.addThisToToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.addThisToToolStripMenuItem.Text = "Add This to";
             // 
+            // favMenu
+            // 
+            this.favMenu.Name = "favMenu";
+            this.favMenu.Size = new System.Drawing.Size(83, 20);
+            this.favMenu.Text = "FAVOURITES";
+            // 
             // address
             // 
             this.address.Location = new System.Drawing.Point(58, 0);
@@ -121,6 +129,7 @@
             this.address.Size = new System.Drawing.Size(705, 20);
             this.address.TabIndex = 1;
             this.address.Text = "Enter Address";
+            this.address.KeyDown += new System.Windows.Forms.KeyEventHandler(address_KeyDown);
             // 
             // backBtn
             // 
@@ -142,15 +151,16 @@
             this.fwdBtn.TabIndex = 3;
             this.fwdBtn.UseVisualStyleBackColor = true;
             // 
-            // bookmarkBtn
+            // favBtn
             // 
-            this.bookmarkBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bookmarkBtn.BackgroundImage")));
-            this.bookmarkBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bookmarkBtn.Location = new System.Drawing.Point(769, 0);
-            this.bookmarkBtn.Name = "bookmarkBtn";
-            this.bookmarkBtn.Size = new System.Drawing.Size(25, 23);
-            this.bookmarkBtn.TabIndex = 4;
-            this.bookmarkBtn.UseVisualStyleBackColor = true;
+            this.favBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("favBtn.BackgroundImage")));
+            this.favBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.favBtn.Location = new System.Drawing.Point(769, 0);
+            this.favBtn.Name = "favBtn";
+            this.favBtn.Size = new System.Drawing.Size(25, 23);
+            this.favBtn.TabIndex = 4;
+            this.favBtn.UseVisualStyleBackColor = true;
+            this.favBtn.Click += new System.EventHandler(this.favBtn_Click);
             // 
             // homeBtn
             // 
@@ -177,7 +187,7 @@
             this.tabPage1.Controls.Add(this.pageContent);
             this.tabPage1.Controls.Add(this.homeBtn);
             this.tabPage1.Controls.Add(this.backBtn);
-            this.tabPage1.Controls.Add(this.bookmarkBtn);
+            this.tabPage1.Controls.Add(this.favBtn);
             this.tabPage1.Controls.Add(this.fwdBtn);
             this.tabPage1.Controls.Add(this.address);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -187,16 +197,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(821, 345);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // pageContent
             // 
@@ -210,7 +210,17 @@
             this.pageContent.Size = new System.Drawing.Size(815, 376);
             this.pageContent.TabIndex = 6;
             // 
-            // Form1
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(821, 399);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -219,7 +229,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.tabControl1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "GUI";
             this.Text = "WebBrowser";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -244,12 +254,13 @@
         private System.Windows.Forms.ToolStripMenuItem addThisToToolStripMenuItem;
         private System.Windows.Forms.Button backBtn;
         private System.Windows.Forms.Button fwdBtn;
-        private System.Windows.Forms.Button bookmarkBtn;
+        private System.Windows.Forms.Button favBtn;
         private System.Windows.Forms.Button homeBtn;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TextBox pageContent;
+        private System.Windows.Forms.ToolStripMenuItem favMenu;
     }
 }
 

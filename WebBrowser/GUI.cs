@@ -12,20 +12,20 @@ namespace WebBrowser
 {
     public partial class GUI : Form
     {
-        FavouritesMgr fMgr;
-        HomePageMgr hpMgr;
+        Favourites fMgr;
+        HomePage hp;
         public GUI()
         {
             InitializeComponent();
-            fMgr = new FavouritesMgr();
+            fMgr = new Favourites();
             popluateFavourites();
-            hpMgr = new HomePageMgr();
+            hp = new HomePage();
             loadHomePage();
         }
 
         private void loadHomePage()
         {
-            string pageUrl = hpMgr.getHomePageUrl();
+            string pageUrl = hp.getHomePageUrl();
             if (pageUrl!= null)
             {
                 loadPage(pageUrl);
@@ -43,11 +43,44 @@ namespace WebBrowser
 
         private void addFavToMenu(Favourite f)
         {
-            ToolStripButton temp = new ToolStripButton(f.name);
+            ContainerControl cc = new ContainerControl();
+            cc.BackColor = Color.White;
+            ToolStripControlHost c = new ToolStripControlHost(cc);
+            Button b = new Button();
+            b.Parent = cc;
+            initRemoveFavButton(b);
+            b.Click += (s, e) => { favMenu.DropDownItems.Remove(c);fMgr.removeFavourite(f); };
+            Button temp = new Button();
+            temp.Text = f.name;
             temp.Click += (s, e) => { loadPage(f.url);address.Text = f.url; };
-            favMenu.DropDownItems.Add(temp);
+            temp.Parent = cc;
+            initFavButton(temp);
+            favMenu.DropDownItems.Add(c);
         }
 
+        private void initRemoveFavButton(Button x)
+        {
+            x.Text = "X";
+            x.ForeColor = Color.Red;
+            x.AutoSize = true;
+            x.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            x.Left = 0;
+        }
+
+        private void initFavButton(Button b)
+        {
+            b.AutoSize = true;
+            b.FlatStyle = FlatStyle.Flat;
+            b.FlatAppearance.BorderSize = 0;
+            b.BackColor = b.Parent.BackColor;
+            b.Left = b.Size.Width;
+        }
+
+        private void updateFavourites()
+        {
+            favMenu.DropDownItems.Clear();
+            popluateFavourites();
+        }
         private void address_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -63,6 +96,7 @@ namespace WebBrowser
         private void favBtn_Click(object sender, EventArgs e)
         {
             fMgr.addFavourite(address.Text, "test");
+            updateFavourites();
         }
 
         private void loadPage(string url)
@@ -72,7 +106,7 @@ namespace WebBrowser
 
         private void homeBtn_Click(object sender, EventArgs e)
         {
-            hpMgr.setHomePage(address.Text);
+            hp.setHomePage(address.Text);
         }
     }
 }

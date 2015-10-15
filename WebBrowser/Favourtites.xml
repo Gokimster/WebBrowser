@@ -1,17 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Favourtites xmlns="urn:lst-emp:emp">
   <Favourite xmlns="">
-    <Id>412921591</Id>
-    <Url>Enter Address</Url>
+    <Id>1804977844</Id>
+    <Url>sup</Url>
     <Name>test</Name>
   </Favourite>
   <Favourite xmlns="">
-    <Id>1887033866</Id>
-    <Url>http://google.com</Url>
-    <Name>test</Name>
-  </Favourite>
-  <Favourite xmlns="">
-    <Id>1058855937</Id>
+    <Id>905427232</Id>
     <Url>http://gokimster.github.io</Url>
     <Name>test</Name>
   </Favourite>

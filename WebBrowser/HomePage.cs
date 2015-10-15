@@ -7,9 +7,9 @@ using System.Xml.Linq;
 
 namespace WebBrowser
 {
-    class HomePageMgr:PersistenceMgr
+    class HomePage:PersistenceMgr
     {
-        public HomePageMgr()
+        public HomePage()
         {
             initXML("HomePage");
         }

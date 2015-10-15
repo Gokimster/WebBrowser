@@ -46,10 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HomePageMgr.cs" />
+    <Compile Include="HomePage.cs" />
     <Compile Include="PersistenceMgr.cs" />
     <Compile Include="Favourite.cs" />
-    <Compile Include="FavouritesMgr.cs" />
+    <Compile Include="Favourites.cs" />
     <Compile Include="WebManager.cs" />
     <Compile Include="GUI.cs">
       <SubType>Form</SubType>

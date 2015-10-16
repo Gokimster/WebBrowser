@@ -47,6 +47,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pageContent = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.favNameBox = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -55,7 +56,7 @@
             // menuStrip1
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.menuStrip1.Font = new System.Drawing.Font("Market Deco", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.favMenu});
@@ -71,7 +72,7 @@
             this.homePageToolStripMenuItem,
             this.bookmarksToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(41, 20);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(40, 20);
             this.toolStripMenuItem1.Text = "Edit";
             // 
             // homePageToolStripMenuItem
@@ -80,19 +81,19 @@
             this.setToolStripMenuItem,
             this.goToToolStripMenuItem});
             this.homePageToolStripMenuItem.Name = "homePageToolStripMenuItem";
-            this.homePageToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.homePageToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.homePageToolStripMenuItem.Text = "Home Page";
             // 
             // setToolStripMenuItem
             // 
             this.setToolStripMenuItem.Name = "setToolStripMenuItem";
-            this.setToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.setToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.setToolStripMenuItem.Text = "Set";
             // 
             // goToToolStripMenuItem
             // 
             this.goToToolStripMenuItem.Name = "goToToolStripMenuItem";
-            this.goToToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.goToToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.goToToolStripMenuItem.Text = "Go To";
             // 
             // bookmarksToolStripMenuItem
@@ -101,32 +102,32 @@
             this.showToolStripMenuItem,
             this.addThisToToolStripMenuItem});
             this.bookmarksToolStripMenuItem.Name = "bookmarksToolStripMenuItem";
-            this.bookmarksToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.bookmarksToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.bookmarksToolStripMenuItem.Text = "Bookmarks";
             // 
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.showToolStripMenuItem.Text = "Show";
             // 
             // addThisToToolStripMenuItem
             // 
             this.addThisToToolStripMenuItem.Name = "addThisToToolStripMenuItem";
-            this.addThisToToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.addThisToToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.addThisToToolStripMenuItem.Text = "Add This to";
             // 
             // favMenu
             // 
             this.favMenu.Name = "favMenu";
-            this.favMenu.Size = new System.Drawing.Size(83, 20);
+            this.favMenu.Size = new System.Drawing.Size(93, 20);
             this.favMenu.Text = "FAVOURITES";
             // 
             // address
             // 
             this.address.Location = new System.Drawing.Point(58, 0);
             this.address.Name = "address";
-            this.address.Size = new System.Drawing.Size(705, 20);
+            this.address.Size = new System.Drawing.Size(526, 20);
             this.address.TabIndex = 1;
             this.address.Text = "Enter Address";
             this.address.KeyDown += new System.Windows.Forms.KeyEventHandler(this.address_KeyDown);
@@ -155,7 +156,7 @@
             // 
             this.favBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("favBtn.BackgroundImage")));
             this.favBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.favBtn.Location = new System.Drawing.Point(769, 0);
+            this.favBtn.Location = new System.Drawing.Point(621, 0);
             this.favBtn.Name = "favBtn";
             this.favBtn.Size = new System.Drawing.Size(25, 23);
             this.favBtn.TabIndex = 4;
@@ -166,7 +167,7 @@
             // 
             this.homeBtn.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("homeBtn.BackgroundImage")));
             this.homeBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.homeBtn.Location = new System.Drawing.Point(796, 0);
+            this.homeBtn.Location = new System.Drawing.Point(590, 0);
             this.homeBtn.Name = "homeBtn";
             this.homeBtn.Size = new System.Drawing.Size(25, 23);
             this.homeBtn.TabIndex = 5;
@@ -185,6 +186,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.favNameBox);
             this.tabPage1.Controls.Add(this.pageContent);
             this.tabPage1.Controls.Add(this.homeBtn);
             this.tabPage1.Controls.Add(this.backBtn);
@@ -220,6 +222,14 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // favNameBox
+            // 
+            this.favNameBox.Location = new System.Drawing.Point(652, 0);
+            this.favNameBox.Name = "favNameBox";
+            this.favNameBox.Size = new System.Drawing.Size(161, 20);
+            this.favNameBox.TabIndex = 7;
+            this.favNameBox.Text = "Favourite Name";
             // 
             // GUI
             // 
@@ -262,6 +272,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TextBox pageContent;
         private System.Windows.Forms.ToolStripMenuItem favMenu;
+        private System.Windows.Forms.TextBox favNameBox;
     }
 }
 

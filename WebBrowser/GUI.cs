@@ -54,6 +54,7 @@ namespace WebBrowser
             temp.Text = f.name;
             temp.Click += (s, e) => { loadPage(f.url);address.Text = f.url; };
             temp.Parent = cc;
+            temp.Left = b.Size.Width;
             initFavButton(temp);
             favMenu.DropDownItems.Add(c);
         }
@@ -73,7 +74,6 @@ namespace WebBrowser
             b.FlatStyle = FlatStyle.Flat;
             b.FlatAppearance.BorderSize = 0;
             b.BackColor = b.Parent.BackColor;
-            b.Left = b.Size.Width;
         }
 
         private void updateFavourites()
@@ -95,7 +95,8 @@ namespace WebBrowser
 
         private void favBtn_Click(object sender, EventArgs e)
         {
-            fMgr.addFavourite(address.Text, "test");
+            fMgr.addFavourite(address.Text, favNameBox.Text);
+            favNameBox.Text = "Favourite Name";
             updateFavourites();
         }
 

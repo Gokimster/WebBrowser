@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,32 +14,31 @@ namespace WebBrowser
     public partial class GUI : Form
     {
         History history;
-        Favourites fMgr;
+        Favourites favs;
         HomePage hp;
+        ArrayList tabs;
         public GUI()
         {
             InitializeComponent();
+            tabs = new ArrayList();
             history = new History();
-            fMgr = new Favourites();
+            favs = new Favourites();
             popluateFavourites();
             hp = new HomePage();
-            loadHomePage();
-            updateButtons();
+            initNewTab();
         }
 
-        private void loadHomePage()
+        private void initNewTab()
         {
-            string pageUrl = hp.getHomePageUrl();
-            if (pageUrl!= null)
-            {
-                loadPage(pageUrl);
-                history.addPage(pageUrl);
-            }
+            TabPage tab = new TabPage();
+            WebTab x = new WebTab(favs, hp);
+            tab.Controls.Add(x);
+            tabControl1.Controls.Add(tab);
         }
 
         private void popluateFavourites()
         {
-            foreach(Favourite f in fMgr.getFavourites().Values)
+            foreach(Favourite f in favs.getFavourites().Values)
             {
                 addFavToMenu(f);
             }
@@ -52,10 +52,10 @@ namespace WebBrowser
             Button b = new Button();
             b.Parent = cc;
             initRemoveFavButton(b);
-            b.Click += (s, e) => { favMenu.DropDownItems.Remove(c);fMgr.removeFavourite(f); };
+            b.Click += (s, e) => { favMenu.DropDownItems.Remove(c);favs.removeFavourite(f); };
             Button temp = new Button();
             temp.Text = f.name;
-            temp.Click += (s, e) => { loadPage(f.url); history.addPage(address.Text); };
+            temp.Click += (s, e) => { initNewTab(); ; };
             temp.Parent = cc;
             temp.Left = b.Size.Width;
             initFavButton(temp);
@@ -83,55 +83,6 @@ namespace WebBrowser
         {
             favMenu.DropDownItems.Clear();
             popluateFavourites();
-        }
-        private void address_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                history.addPage(address.Text);
-                loadPage(address.Text);
-            }
-        }
-        private void address_GotFocus(object sender, KeyEventArgs e)
-        {
-            address.SelectAll();
-        }
-
-        private void favBtn_Click(object sender, EventArgs e)
-        {
-            fMgr.addFavourite(address.Text, favNameBox.Text);
-            favNameBox.Text = "Favourite Name";
-            updateFavourites();
-        }
-
-        private void loadPage(string url)
-        {
-            pageContent.Text = WebManager.getPage(url);
-            //this writes the same text to the adress bar if called from address_KeyDown 
-            //but better to have it here than duplicate the same line everywhere we need to set the text
-            address.Text = url;
-            updateButtons();
-        }
-
-        private void updateButtons()
-        {
-            fwdBtn.Enabled = history.canGoToNext();
-            backBtn.Enabled = history.canGoToPrevious();
-        }
-
-        private void homeBtn_Click(object sender, EventArgs e)
-        {
-            hp.setHomePage(address.Text);
-        }
-
-        private void backBtn_Click(object sender, EventArgs e)
-        {
-            loadPage(history.goToPrevious());
-        }
-
-        private void fwdBtn_Click(object sender, EventArgs e)
-        {
-            loadPage(history.goToNext());
         }
     }
 }

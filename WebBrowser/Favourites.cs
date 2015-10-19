@@ -14,7 +14,7 @@ namespace WebBrowser
 
         public Favourites()
         {
-            initXML("Favourtites");
+            initXML("Favourites");
 
             favs = new Dictionary<int, Favourite>();
             foreach(var f in xmlElem.Elements())

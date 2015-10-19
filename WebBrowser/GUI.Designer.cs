@@ -45,9 +45,9 @@
             this.homeBtn = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.favNameBox = new System.Windows.Forms.TextBox();
             this.pageContent = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.favNameBox = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -141,6 +141,7 @@
             this.backBtn.Size = new System.Drawing.Size(25, 23);
             this.backBtn.TabIndex = 2;
             this.backBtn.UseVisualStyleBackColor = true;
+            this.backBtn.Click += new System.EventHandler(this.backBtn_Click);
             // 
             // fwdBtn
             // 
@@ -151,6 +152,7 @@
             this.fwdBtn.Size = new System.Drawing.Size(25, 23);
             this.fwdBtn.TabIndex = 3;
             this.fwdBtn.UseVisualStyleBackColor = true;
+            this.fwdBtn.Click += new System.EventHandler(this.fwdBtn_Click);
             // 
             // favBtn
             // 
@@ -201,6 +203,14 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // favNameBox
+            // 
+            this.favNameBox.Location = new System.Drawing.Point(652, 0);
+            this.favNameBox.Name = "favNameBox";
+            this.favNameBox.Size = new System.Drawing.Size(161, 20);
+            this.favNameBox.TabIndex = 7;
+            this.favNameBox.Text = "Favourite Name";
+            // 
             // pageContent
             // 
             this.pageContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -222,14 +232,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // favNameBox
-            // 
-            this.favNameBox.Location = new System.Drawing.Point(652, 0);
-            this.favNameBox.Name = "favNameBox";
-            this.favNameBox.Size = new System.Drawing.Size(161, 20);
-            this.favNameBox.TabIndex = 7;
-            this.favNameBox.Text = "Favourite Name";
             // 
             // GUI
             // 

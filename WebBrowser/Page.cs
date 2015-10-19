@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace WebBrowser
 {
-    public class Favourite: Page
+    public class Page
     {
-        public string name { get; set; }
+        public string url { get; set; }
 
-        public Favourite(string url, string name):base(url)
+        public Page(string url)
         {
-            this.name = name;
+            this.url = url;
         }
     }
 }

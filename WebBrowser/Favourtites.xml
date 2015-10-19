@@ -1,38 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Favourtites xmlns="urn:lst-emp:emp">
   <Favourite xmlns="">
-    <Id>1804977844</Id>
-    <Url>sup</Url>
-    <Name>test</Name>
-  </Favourite>
-  <Favourite xmlns="">
-    <Id>905427232</Id>
-    <Url>http://gokimster.github.io</Url>
-    <Name>test</Name>
-  </Favourite>
-  <Favourite xmlns="">
-    <Id>1365360592</Id>
+    <Id>959157190</Id>
     <Url>http://gokimster.github.io</Url>
     <Name>Favourite Name</Name>
   </Favourite>
   <Favourite xmlns="">
-    <Id>412535337</Id>
+    <Id>367751830</Id>
     <Url>http://gokimster.github.io</Url>
     <Name>name</Name>
-  </Favourite>
-  <Favourite xmlns="">
-    <Id>1087755952</Id>
-    <Url>http://gokimster.github.io</Url>
-    <Name>Favourite Name</Name>
-  </Favourite>
-  <Favourite xmlns="">
-    <Id>234203759</Id>
-    <Url>http://gokimster.github.io</Url>
-    <Name>Favourite Name asjkdgaksdgas</Name>
-  </Favourite>
-  <Favourite xmlns="">
-    <Id>1599835533</Id>
-    <Url>http://gokimster.github.io</Url>
-    <Name>Favourite Name</Name>
   </Favourite>
 </Favourtites>

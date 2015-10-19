@@ -12,15 +12,18 @@ namespace WebBrowser
 {
     public partial class GUI : Form
     {
+        History history;
         Favourites fMgr;
         HomePage hp;
         public GUI()
         {
             InitializeComponent();
+            history = new History();
             fMgr = new Favourites();
             popluateFavourites();
             hp = new HomePage();
             loadHomePage();
+            updateButtons();
         }
 
         private void loadHomePage()
@@ -29,7 +32,7 @@ namespace WebBrowser
             if (pageUrl!= null)
             {
                 loadPage(pageUrl);
-                address.Text = pageUrl;
+                history.addPage(pageUrl);
             }
         }
 
@@ -52,7 +55,7 @@ namespace WebBrowser
             b.Click += (s, e) => { favMenu.DropDownItems.Remove(c);fMgr.removeFavourite(f); };
             Button temp = new Button();
             temp.Text = f.name;
-            temp.Click += (s, e) => { loadPage(f.url);address.Text = f.url; };
+            temp.Click += (s, e) => { loadPage(f.url); history.addPage(address.Text); };
             temp.Parent = cc;
             temp.Left = b.Size.Width;
             initFavButton(temp);
@@ -85,6 +88,7 @@ namespace WebBrowser
         {
             if (e.KeyCode == Keys.Enter)
             {
+                history.addPage(address.Text);
                 loadPage(address.Text);
             }
         }
@@ -103,11 +107,31 @@ namespace WebBrowser
         private void loadPage(string url)
         {
             pageContent.Text = WebManager.getPage(url);
+            //this writes the same text to the adress bar if called from address_KeyDown 
+            //but better to have it here than duplicate the same line everywhere we need to set the text
+            address.Text = url;
+            updateButtons();
+        }
+
+        private void updateButtons()
+        {
+            fwdBtn.Enabled = history.canGoToNext();
+            backBtn.Enabled = history.canGoToPrevious();
         }
 
         private void homeBtn_Click(object sender, EventArgs e)
         {
             hp.setHomePage(address.Text);
+        }
+
+        private void backBtn_Click(object sender, EventArgs e)
+        {
+            loadPage(history.goToPrevious());
+        }
+
+        private void fwdBtn_Click(object sender, EventArgs e)
+        {
+            loadPage(history.goToNext());
         }
     }
 }

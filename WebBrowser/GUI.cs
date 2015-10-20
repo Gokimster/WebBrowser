@@ -41,7 +41,11 @@ namespace WebBrowser
 
         private void initNewTab(string url)
         {
-            initNewTab();
+            TabPage tab = new TabPage();
+            WebTab x = new WebTab(favs, hp, url);            
+            tab.Controls.Add(x);
+            tabControl1.Controls.Add(tab);
+            tab.Text = "Tab " + tabControl1.Controls.Count;
         }
 
         private void populateHistory()
@@ -75,7 +79,7 @@ namespace WebBrowser
         public void addFavToMenu(Favourite f)
         {
             ContainerControl cc = new ContainerControl();
-            cc.BackColor = Color.White;
+            cc.BackColor = Color.WhiteSmoke;
             ToolStripControlHost c = new ToolStripControlHost(cc);
             Button b = new Button();
             b.Parent = cc;
@@ -83,10 +87,19 @@ namespace WebBrowser
             b.Click += (s, e) => { favMenu.DropDownItems.Remove(c);favs.removeFavourite(f); };
             TextBox temp = new TextBox();
             temp.Text = f.name;
-            temp.Click += (s, e) => { initNewTab(); };
+            temp.Click += (s, e) => { initNewTab(f.url); };
             temp.Parent = cc;
             temp.Left = b.Size.Width;
+            temp.Left = (int)Math.Floor((float)temp.Left * 1.3f);
             initFavBox(temp);
+            Button t = new Button();
+            t.Text = f.url;
+            t.Parent = cc;
+            initMenuButton(t);
+            t.Top = temp.Height>b.Height?temp.Height :b.Height;
+            t.Top = (int)Math.Floor((float)t.Top * 1.1f);
+            t.Left = temp.Left;
+            t.Enabled = false;
             Button eb = new Button();
             eb.Parent = cc;
             eb.Left = temp.Left + temp.Size.Width;
@@ -98,6 +111,7 @@ namespace WebBrowser
         private void initRemoveFavButton(Button x)
         {
             x.Text = "X";
+            x.FlatStyle = FlatStyle.Flat;
             x.ForeColor = Color.Red;
             x.AutoSize = true;
             x.AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -108,6 +122,7 @@ namespace WebBrowser
         {
             b.AutoSize = true;
             b.ReadOnly = true;
+            b.BorderStyle = BorderStyle.None;
             b.BackColor = b.Parent.BackColor;
         }
 
@@ -122,6 +137,7 @@ namespace WebBrowser
         private void initEditButton(Button b)
         {
             b.Text = "E";
+            b.FlatStyle = FlatStyle.Flat;
             b.ForeColor = Color.Blue;
             b.AutoSize = true;
             b.AutoSizeMode = AutoSizeMode.GrowAndShrink;
@@ -178,6 +194,7 @@ namespace WebBrowser
         private void clearHistory_Click(object sender, EventArgs e)
         {
             bHistory.clearBrowserHistory();
+            updateHistory();
         }
     }
 }

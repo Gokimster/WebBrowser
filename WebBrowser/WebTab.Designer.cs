@@ -44,6 +44,7 @@ namespace WebBrowser
             // 
             this.worker.DoWork += new DoWorkEventHandler(worker_DoWork);
             this.worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
+            this.worker.WorkerSupportsCancellation = true;
             // 
             // address
             // 

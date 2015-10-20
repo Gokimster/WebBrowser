@@ -66,26 +66,31 @@
             // newTabMenuItem
             // 
             this.newTabMenuItem.Name = "newTabMenuItem";
-            this.newTabMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.newTabMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.newTabMenuItem.Size = new System.Drawing.Size(209, 22);
             this.newTabMenuItem.Text = "NEW TAB";
             this.newTabMenuItem.Click += new System.EventHandler(this.newTabMenuItem_Click);
             // 
             // clearHistory
             // 
             this.clearHistory.Name = "clearHistory";
-            this.clearHistory.Size = new System.Drawing.Size(168, 22);
+            this.clearHistory.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.Delete)));
+            this.clearHistory.Size = new System.Drawing.Size(250, 22);
             this.clearHistory.Text = "CLEAR HISTORY";
             this.clearHistory.Click += new System.EventHandler(this.clearHistory_Click);
             // 
             // favMenu
             // 
             this.favMenu.Name = "favMenu";
+            this.favMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
             this.favMenu.Size = new System.Drawing.Size(93, 20);
             this.favMenu.Text = "FAVOURITES";
             // 
             // historyMenu
             // 
             this.historyMenu.Name = "historyMenu";
+            this.historyMenu.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
             this.historyMenu.Size = new System.Drawing.Size(71, 20);
             this.historyMenu.Text = "HISTORY";
             // 

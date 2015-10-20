@@ -19,13 +19,25 @@ namespace WebBrowser
         BackgroundWorker worker;
         public WebTab(Favourites favs, HomePage hp)
         {
+            initTab(favs, hp);
+            loadHomePage();
+            updateButtons();
+        }
+
+        public WebTab(Favourites favs, HomePage hp, string url)
+        {
+            initTab(favs, hp);
+            loadPage(url);
+            updateButtons();
+        }
+
+        private void initTab(Favourites favs, HomePage hp)
+        {
             worker = new BackgroundWorker();
             this.favs = favs;
             this.hp = hp;
             InitializeComponent();
             history = new History();
-            loadHomePage();
-            updateButtons();
         }
 
         public void loadHomePage()
@@ -33,7 +45,7 @@ namespace WebBrowser
             string pageUrl = hp.getHomePageUrl();
             if (pageUrl != null)
             {
-                worker.RunWorkerAsync(pageUrl);
+                loadPage(pageUrl);
                 addPageToHistory(pageUrl);
             }
         }
@@ -82,7 +94,7 @@ namespace WebBrowser
             if (e.KeyCode == Keys.Enter)
             {
                 addPageToHistory(address.Text);
-                worker.RunWorkerAsync(address.Text);
+                loadPage(address.Text);
             }
         }
         private void address_GotFocus(object sender, KeyEventArgs e)
@@ -99,11 +111,14 @@ namespace WebBrowser
 
         private void loadPage(string url)
         {
-            pageContent.Text = WebManager.getPage(url);
+            if (worker.IsBusy)
+            {
+                worker.CancelAsync();
+            }
+            worker.RunWorkerAsync(url);
             //this writes the same text to the adress bar if called from address_KeyDown 
             //but better to have it here than duplicate the same line everywhere we need to set the text
             address.Text = url;
-            updateButtons();
         }
 
         private void updateButtons()
@@ -124,7 +139,7 @@ namespace WebBrowser
 
         private void fwdBtn_Click(object sender, EventArgs e)
         {
-            worker.RunWorkerAsync(history.goToNext());
+            loadPage(history.goToNext());
         }
         
         private void worker_DoWork(object sender, DoWorkEventArgs e)
@@ -140,6 +155,7 @@ namespace WebBrowser
         private void loadPageWorker(string html)
         {
             pageContent.Text = html;
+            updateButtons();
         }
     }
 }

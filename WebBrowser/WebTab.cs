@@ -13,10 +13,20 @@ namespace WebBrowser
 {
     public partial class WebTab : UserControl
     {
-        History history;
-        Favourites favs;
-        HomePage hp;
-        BackgroundWorker worker;
+        //-----------------------------//
+        //----------Fields-------------//
+        //-----------------------------//
+        private History history;
+        private Favourites favs;
+        private HomePage hp;
+        private BackgroundWorker worker;
+        private string workerNextURL;
+
+        //-----------------------------//
+        //----------Constructors-------//
+        //-----------------------------//
+
+        //make a new tab and load the home page url
         public WebTab(Favourites favs, HomePage hp)
         {
             initTab(favs, hp);
@@ -24,6 +34,7 @@ namespace WebBrowser
             updateButtons();
         }
 
+        //make a new tab and load a given page url
         public WebTab(Favourites favs, HomePage hp, string url)
         {
             initTab(favs, hp);
@@ -31,8 +42,14 @@ namespace WebBrowser
             updateButtons();
         }
 
+        //-----------------------------//
+        //----------Methods------------//
+        //-----------------------------//
+
+        //initialise main components for a new tab
         private void initTab(Favourites favs, HomePage hp)
         {
+            workerNextURL = null;
             worker = new BackgroundWorker();
             this.favs = favs;
             this.hp = hp;
@@ -40,6 +57,7 @@ namespace WebBrowser
             history = new History();
         }
 
+        //load the browser home page
         public void loadHomePage()
         {
             string pageUrl = hp.getHomePageUrl();
@@ -50,45 +68,35 @@ namespace WebBrowser
             }
         }
 
+        //add a favourite page to the favourites menu
         private void addFavToMenu(Favourite f)
         {
             ((GUI)this.ParentForm).addFavToMenu(f);
         }
 
-        private void initRemoveFavButton(Button x)
-        {
-            x.Text = "X";
-            x.ForeColor = Color.Red;
-            x.AutoSize = true;
-            x.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            x.Left = 0;
-        }
-
-        private void initFavButton(Button b)
-        {
-            b.AutoSize = true;
-            b.FlatStyle = FlatStyle.Flat;
-            b.FlatAppearance.BorderSize = 0;
-            b.BackColor = b.Parent.BackColor;
-        }
-
+        //updates favourites menu
         private void updateFavourites()
         {
             ((GUI)this.ParentForm).updateFavourites();
         }
 
+        //updates browser history menu
         private void updateHistory()
         {
             ((GUI)this.ParentForm)?.updateHistory();
         }
 
+        //adds a page to tab and browser history if it hasn't just been added
         private void addPageToHistory(string url)
         {
             if (history.addPage(url))
+            {
                 ((GUI)this.ParentForm)?.bHistory.addToBrowserHistory(url);
-            updateHistory();
+                updateHistory();
+            }
         }
 
+        //loads a new page when Enter key is pressed and adds it to history
         private void address_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -97,11 +105,8 @@ namespace WebBrowser
                 loadPage(address.Text);
             }
         }
-        private void address_GotFocus(object sender, KeyEventArgs e)
-        {
-            address.SelectAll();
-        }
 
+        //adds current page to favourites with the name given in the favourite name box
         private void favBtn_Click(object sender, EventArgs e)
         {
             favs.addFavourite(address.Text, favNameBox.Text);
@@ -109,53 +114,73 @@ namespace WebBrowser
             updateFavourites();
         }
 
+        //loads new page onto the tabe given an url
         private void loadPage(string url)
         {
+            //update buttons even if worker is busy to disable back/forward buttons 
+            //if pressed repeatedly
+            updateButtons();
+
+            //remember latest url requested - no need to load a queue of pages, only interested in latest
             if (worker.IsBusy)
             {
-                worker.CancelAsync();
+                workerNextURL = url;
             }
-            worker.RunWorkerAsync(url);
-            //this writes the same text to the adress bar if called from address_KeyDown 
-            //but better to have it here than duplicate the same line everywhere we need to set the text
-            address.Text = url;
+            else
+            {
+                worker.RunWorkerAsync(url);
+                //this writes the same text to the adress bar if called from address_KeyDown 
+                //but better to have it here than duplicate the same line everywhere we need to set the text
+                address.Text = url;
+            }
         }
 
+        //update back and fwd buttons depending on where we are in the
+        //tab history
         private void updateButtons()
         {
             fwdBtn.Enabled = history.canGoToNext();
             backBtn.Enabled = history.canGoToPrevious();
         }
 
+        //-----------------------------//
+        //----------Events------------//
+        //-----------------------------//
+
+        //sets home page to the current page in the tab
         private void homeBtn_Click(object sender, EventArgs e)
         {
             hp.setHomePage(address.Text);
         }
 
+        //loads previous page in history
         private void backBtn_Click(object sender, EventArgs e)
         {
             loadPage(history.goToPrevious());
         }
 
+        //loads next page in history
         private void fwdBtn_Click(object sender, EventArgs e)
         {
             loadPage(history.goToNext());
         }
         
+        //async fetching of html
         private void worker_DoWork(object sender, DoWorkEventArgs e)
         {
             e.Result = WebManager.getPage((string)e.Argument);
         }
 
+        //once html is fetched load content and check if 
+        //there is another url waiting to be loaded
         private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            loadPageWorker((string)e.Result);
-        }
-
-        private void loadPageWorker(string html)
-        {
-            pageContent.Text = html;
-            updateButtons();
+            pageContent.Text =((string)e.Result);
+            if(workerNextURL != null)
+            {
+                loadPage((string)workerNextURL);
+                workerNextURL = null;
+            }
         }
     }
 }

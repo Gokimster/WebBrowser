@@ -13,6 +13,9 @@ namespace WebBrowser
 {
     public partial class GUI : Form
     {
+        //----------------------------------------//
+        //----------Fieds-------------------------//
+        //----------------------------------------//
         private Favourites favs;
         private HomePage hp;
         public BrowserHistory bHistory { get; private set; }
@@ -30,6 +33,11 @@ namespace WebBrowser
             initNewTab();
         }
 
+        //----------------------------------------//
+        //----------Methods-----------------------//
+        //----------------------------------------//
+
+        //create a new tab which loads the home page
         private void initNewTab()
         {
             TabPage tab = new TabPage();
@@ -39,6 +47,7 @@ namespace WebBrowser
             tab.Text = "Tab " + tabControl1.Controls.Count;
         }
 
+        //create a new tab which loads a given url
         private void initNewTab(string url)
         {
             TabPage tab = new TabPage();
@@ -48,21 +57,8 @@ namespace WebBrowser
             tab.Text = "Tab " + tabControl1.Controls.Count;
         }
 
-        private void populateHistory()
-        {
-            foreach (Page p in bHistory.browserHistory)
-            {
-                addPageToHistoryMenu(p);
-            }
-        }
-        private void populateFavourites()
-        {
-            foreach(Favourite f in favs.getFavourites().Values)
-            {
-                addFavToMenu(f);
-            }
-        }
-
+        //dynamically add an item to the history drop down menu
+        //given a page
         private void addPageToHistoryMenu(Page p)
         {
             ContainerControl cc = new ContainerControl();
@@ -76,6 +72,7 @@ namespace WebBrowser
             historyMenu.DropDownItems.Add(c);
         }
 
+        //dynamically add an item to the favourites drop down menu given a Favourite
         public void addFavToMenu(Favourite f)
         {
             ContainerControl cc = new ContainerControl();
@@ -108,6 +105,7 @@ namespace WebBrowser
             favMenu.DropDownItems.Add(c);
         }
 
+        //style for the remove button for a favourite in the menu
         private void initRemoveFavButton(Button x)
         {
             x.Text = "X";
@@ -118,6 +116,7 @@ namespace WebBrowser
             x.Left = 0;
         }
 
+        //style for text box with the favourite name
         private void initFavBox(TextBox b)
         {
             b.AutoSize = true;
@@ -170,6 +169,21 @@ namespace WebBrowser
         {
             historyMenu.DropDownItems.Clear();
             populateHistory();
+        }
+
+        private void populateHistory()
+        {
+            foreach (Page p in bHistory.browserHistory)
+            {
+                addPageToHistoryMenu(p);
+            }
+        }
+        private void populateFavourites()
+        {
+            foreach (Favourite f in favs.getFavourites().Values)
+            {
+                addFavToMenu(f);
+            }
         }
 
         //----------------------------------------//

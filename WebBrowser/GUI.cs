@@ -13,17 +13,19 @@ namespace WebBrowser
 {
     public partial class GUI : Form
     {
-        History history;
-        Favourites favs;
-        HomePage hp;
-        ArrayList tabs;
+        private Favourites favs;
+        private HomePage hp;
+        public BrowserHistory bHistory { get; private set; }
+        private ArrayList tabs;
+
         public GUI()
         {
             InitializeComponent();
             tabs = new ArrayList();
-            history = new History();
             favs = new Favourites();
-            popluateFavourites();
+            bHistory = new BrowserHistory();
+            populateFavourites();
+            populateHistory();
             hp = new HomePage();
             initNewTab();
         }
@@ -34,9 +36,22 @@ namespace WebBrowser
             WebTab x = new WebTab(favs, hp);
             tab.Controls.Add(x);
             tabControl1.Controls.Add(tab);
+            tab.Text = "Tab " + tabControl1.Controls.Count;
         }
 
-        private void popluateFavourites()
+        private void initNewTab(string url)
+        {
+            initNewTab();
+        }
+
+        private void populateHistory()
+        {
+            foreach (Page p in bHistory.browserHistory)
+            {
+                addPageToHistoryMenu(p);
+            }
+        }
+        private void populateFavourites()
         {
             foreach(Favourite f in favs.getFavourites().Values)
             {
@@ -44,7 +59,20 @@ namespace WebBrowser
             }
         }
 
-        private void addFavToMenu(Favourite f)
+        private void addPageToHistoryMenu(Page p)
+        {
+            ContainerControl cc = new ContainerControl();
+            cc.BackColor = Color.White;
+            ToolStripControlHost c = new ToolStripControlHost(cc);
+            Button temp = new Button();
+            temp.Text = p.url;
+            temp.Click += (s, e) => { initNewTab();};
+            temp.Parent = cc;
+            initMenuButton(temp);
+            historyMenu.DropDownItems.Add(c);
+        }
+
+        public void addFavToMenu(Favourite f)
         {
             ContainerControl cc = new ContainerControl();
             cc.BackColor = Color.White;
@@ -55,10 +83,10 @@ namespace WebBrowser
             b.Click += (s, e) => { favMenu.DropDownItems.Remove(c);favs.removeFavourite(f); };
             Button temp = new Button();
             temp.Text = f.name;
-            temp.Click += (s, e) => { initNewTab(); ; };
+            temp.Click += (s, e) => { initNewTab(); };
             temp.Parent = cc;
             temp.Left = b.Size.Width;
-            initFavButton(temp);
+            initMenuButton(temp);
             favMenu.DropDownItems.Add(c);
         }
 
@@ -71,7 +99,7 @@ namespace WebBrowser
             x.Left = 0;
         }
 
-        private void initFavButton(Button b)
+        private void initMenuButton(Button b)
         {
             b.AutoSize = true;
             b.FlatStyle = FlatStyle.Flat;
@@ -79,10 +107,40 @@ namespace WebBrowser
             b.BackColor = b.Parent.BackColor;
         }
 
-        private void updateFavourites()
+        public void updateFavourites()
         {
             favMenu.DropDownItems.Clear();
-            popluateFavourites();
+            populateFavourites();
+        }
+
+        public void updateHistory()
+        {
+            historyMenu.DropDownItems.Clear();
+            populateHistory();
+        }
+
+        //----------------------------------------//
+        //----------Events------------------------//
+        //----------------------------------------//
+
+        private void newTabMenuItem_Click(object sender, EventArgs e)
+        {
+            initNewTab();
+        }
+
+        private void addTabBtn_Click(object sender, EventArgs e)
+        {
+            initNewTab();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tabControl1.Controls.Remove(tabControl1.SelectedTab);
+        }
+
+        private void clearHistory_Click(object sender, EventArgs e)
+        {
+            bHistory.clearBrowserHistory();
         }
     }
 }

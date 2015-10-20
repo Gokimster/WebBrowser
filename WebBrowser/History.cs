@@ -8,28 +8,18 @@ using System.Xml.Linq;
 
 namespace WebBrowser
 {
-    public class History:PersistenceMgr
+    public class History
     {
         private LinkedList<Page> tabHistory;
         private LinkedListNode<Page> current;
-        private static Stack<Page> browserHistory;
 
         public History()
         {
-            initXML("History");
             tabHistory = new LinkedList<Page>();
-            if (browserHistory == null)
-            {
-                browserHistory = new Stack<Page>();
-                foreach (var f in xmlElem.Elements())
-                {
-                    browserHistory.Push(new Page(f.Element("Url").Value));
-                }
-            }
             current = new LinkedListNode<Page>(null);
         }
 
-        public void addPage(string url)
+        public bool addPage(string url)
         {
             Page s = new Page(url);
             if (current.Value != null && !(current.Value.url.Equals(url)))
@@ -42,7 +32,7 @@ namespace WebBrowser
                 {
                     tabHistory.RemoveFirst();
                 }
-                addToBrowserHistory(s);
+                return true;
             }
             else
             {
@@ -50,21 +40,10 @@ namespace WebBrowser
                 {
                     tabHistory.AddFirst(s);
                     current = tabHistory.First;
-                    addToBrowserHistory(s);
+                    return true;
                 }
             }
-        }
-
-        public void addToBrowserHistory(Page p)
-        {
-            browserHistory.Push(p);
-            addPageToHistory(p);
-        }
-
-        private void addPageToHistory(Page p)
-        {
-            xmlElem.Add(new XElement("Page", new XElement("Url", p.url)));
-            xmlElem.Save(fileName);
+            return false;
         }
 
         public bool canGoToPrevious()

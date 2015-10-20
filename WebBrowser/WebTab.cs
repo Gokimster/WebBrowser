@@ -21,7 +21,6 @@ namespace WebBrowser
             this.hp = hp;
             InitializeComponent();
             history = new History();
-            popluateFavourites();
             loadHomePage();
             updateButtons();
         }
@@ -32,35 +31,13 @@ namespace WebBrowser
             if (pageUrl != null)
             {
                 loadPage(pageUrl);
-                history.addPage(pageUrl);
-            }
-        }
-
-        private void popluateFavourites()
-        {
-            foreach (Favourite f in favs.getFavourites().Values)
-            {
-                addFavToMenu(f);
+                addPageToHistory(pageUrl);
             }
         }
 
         private void addFavToMenu(Favourite f)
         {
-            ContainerControl cc = new ContainerControl();
-            cc.BackColor = Color.White;
-            ToolStripControlHost c = new ToolStripControlHost(cc);
-            Button b = new Button();
-            b.Parent = cc;
-            initRemoveFavButton(b);
-            b.Click += (s, e) => { //favMenu.DropDownItems.Remove(c); 
-                favs.removeFavourite(f); };
-            Button temp = new Button();
-            temp.Text = f.name;
-            temp.Click += (s, e) => { loadPage(f.url); history.addPage(address.Text); };
-            temp.Parent = cc;
-            temp.Left = b.Size.Width;
-            initFavButton(temp);
-            //favMenu.DropDownItems.Add(c);
+            ((GUI)this.ParentForm).addFavToMenu(f);
         }
 
         private void initRemoveFavButton(Button x)
@@ -82,14 +59,26 @@ namespace WebBrowser
 
         private void updateFavourites()
         {
-            //favMenu.DropDownItems.Clear();
-            popluateFavourites();
+            ((GUI)this.ParentForm).updateFavourites();
         }
+
+        private void updateHistory()
+        {
+            ((GUI)this.ParentForm)?.updateHistory();
+        }
+
+        private void addPageToHistory(string url)
+        {
+            if (history.addPage(url))
+                ((GUI)this.ParentForm)?.bHistory.addToBrowserHistory(url);
+            updateHistory();
+        }
+
         private void address_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                history.addPage(address.Text);
+                addPageToHistory(address.Text);
                 loadPage(address.Text);
             }
         }

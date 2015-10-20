@@ -51,6 +51,22 @@ namespace WebBrowser
             xmlElem.Save(fileName);
         }
 
+        public void changeFavName(Favourite f, string name)
+        {
+            foreach (var fav in favs.Where(kvp => kvp.Value.Equals(f)).ToList())
+            {
+                fav.Value.name = name;
+                var favourites = from el in xmlElem.Elements("Favourite")
+                                 where (int)el.Element("Id") == fav.Key
+                                 select el;
+                foreach (XElement xel in favourites)
+                {
+                    xel.SetElementValue("Name", name);
+                }
+            }
+            xmlElem.Save(fileName);
+        }
+
         private void addFavToFile(int id, Favourite f)
         {
             xmlElem.Add(new XElement("Favourite", new XElement("Id", id), new XElement("Url", f.url), new XElement("Name", f.name)));
@@ -60,23 +76,6 @@ namespace WebBrowser
         public Dictionary<int, Favourite> getFavourites()
         {
             return favs;
-        }
-
-        public Favourite this[int index]
-        {
-            get
-            {
-                if (!favs.ContainsKey(index))
-                {
-                    return null;
-                }
-                else
-                {
-                    return favs[index];
-                }
-            }
-            //no set method because we want to use the addFavourite() method
-            //to generate the id which is also the index
         }
     }
 

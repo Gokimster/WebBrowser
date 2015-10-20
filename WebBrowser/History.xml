@@ -12,4 +12,19 @@
   <Page xmlns="">
     <Url>sup</Url>
   </Page>
+  <Page xmlns="">
+    <Url>hi</Url>
+  </Page>
+  <Page xmlns="">
+    <Url>http://google.com</Url>
+  </Page>
+  <Page xmlns="">
+    <Url>http://gokimster.github.io</Url>
+  </Page>
+  <Page xmlns="">
+    <Url>uuu</Url>
+  </Page>
+  <Page xmlns="">
+    <Url>gokimster</Url>
+  </Page>
 </History>

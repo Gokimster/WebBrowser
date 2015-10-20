@@ -31,12 +31,12 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.newTabMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearHistory = new System.Windows.Forms.ToolStripMenuItem();
             this.favMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.historyMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.addTabBtn = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.historyMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearHistory = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeTabBtn = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,11 +70,24 @@
             this.newTabMenuItem.Text = "NEW TAB";
             this.newTabMenuItem.Click += new System.EventHandler(this.newTabMenuItem_Click);
             // 
+            // clearHistory
+            // 
+            this.clearHistory.Name = "clearHistory";
+            this.clearHistory.Size = new System.Drawing.Size(168, 22);
+            this.clearHistory.Text = "CLEAR HISTORY";
+            this.clearHistory.Click += new System.EventHandler(this.clearHistory_Click);
+            // 
             // favMenu
             // 
             this.favMenu.Name = "favMenu";
             this.favMenu.Size = new System.Drawing.Size(93, 20);
             this.favMenu.Text = "FAVOURITES";
+            // 
+            // historyMenu
+            // 
+            this.historyMenu.Name = "historyMenu";
+            this.historyMenu.Size = new System.Drawing.Size(71, 20);
+            this.historyMenu.Text = "HISTORY";
             // 
             // tabControl1
             // 
@@ -94,30 +107,17 @@
             this.addTabBtn.UseVisualStyleBackColor = true;
             this.addTabBtn.Click += new System.EventHandler(this.addTabBtn_Click);
             // 
-            // button1
+            // removeTabBtn
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.DarkRed;
-            this.button1.Location = new System.Drawing.Point(769, 23);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(25, 24);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "-";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // historyMenu
-            // 
-            this.historyMenu.Name = "historyMenu";
-            this.historyMenu.Size = new System.Drawing.Size(71, 20);
-            this.historyMenu.Text = "HISTORY";
-            // 
-            // clearHistory
-            // 
-            this.clearHistory.Name = "clearHistory";
-            this.clearHistory.Size = new System.Drawing.Size(168, 22);
-            this.clearHistory.Text = "CLEAR HISTORY";
-            this.clearHistory.Click += new System.EventHandler(this.clearHistory_Click);
+            this.removeTabBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.removeTabBtn.ForeColor = System.Drawing.Color.DarkRed;
+            this.removeTabBtn.Location = new System.Drawing.Point(769, 23);
+            this.removeTabBtn.Name = "removeTabBtn";
+            this.removeTabBtn.Size = new System.Drawing.Size(25, 24);
+            this.removeTabBtn.TabIndex = 8;
+            this.removeTabBtn.Text = "-";
+            this.removeTabBtn.UseVisualStyleBackColor = true;
+            this.removeTabBtn.Click += new System.EventHandler(this.removeTabBtn_Click);
             // 
             // GUI
             // 
@@ -125,7 +125,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(829, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.removeTabBtn);
             this.Controls.Add(this.addTabBtn);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.tabControl1);
@@ -147,7 +147,7 @@
         private System.Windows.Forms.ToolStripMenuItem fileMenu;
         private System.Windows.Forms.ToolStripMenuItem newTabMenuItem;
         private System.Windows.Forms.Button addTabBtn;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button removeTabBtn;
         private System.Windows.Forms.ToolStripMenuItem historyMenu;
         private System.Windows.Forms.ToolStripMenuItem clearHistory;
     }

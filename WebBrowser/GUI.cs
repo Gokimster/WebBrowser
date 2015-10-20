@@ -81,12 +81,17 @@ namespace WebBrowser
             b.Parent = cc;
             initRemoveFavButton(b);
             b.Click += (s, e) => { favMenu.DropDownItems.Remove(c);favs.removeFavourite(f); };
-            Button temp = new Button();
+            TextBox temp = new TextBox();
             temp.Text = f.name;
             temp.Click += (s, e) => { initNewTab(); };
             temp.Parent = cc;
             temp.Left = b.Size.Width;
-            initMenuButton(temp);
+            initFavBox(temp);
+            Button eb = new Button();
+            eb.Parent = cc;
+            eb.Left = temp.Left + temp.Size.Width;
+            eb.Click += (s, e) => editButtonClick(temp, eb, f);
+            initEditButton(eb);
             favMenu.DropDownItems.Add(c);
         }
 
@@ -99,12 +104,44 @@ namespace WebBrowser
             x.Left = 0;
         }
 
+        private void initFavBox(TextBox b)
+        {
+            b.AutoSize = true;
+            b.ReadOnly = true;
+            b.BackColor = b.Parent.BackColor;
+        }
+
         private void initMenuButton(Button b)
         {
             b.AutoSize = true;
             b.FlatStyle = FlatStyle.Flat;
             b.FlatAppearance.BorderSize = 0;
             b.BackColor = b.Parent.BackColor;
+        }
+
+        private void initEditButton(Button b)
+        {
+            b.Text = "E";
+            b.ForeColor = Color.Blue;
+            b.AutoSize = true;
+            b.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+        }
+
+        private void editButtonClick(TextBox temp, Button eb, Favourite f)
+        {
+            temp.ReadOnly = false;
+            eb.Text = "S";
+            eb.ForeColor = Color.Green;
+            eb.Click += (s, e) => confirmEditClick(temp, eb, f);
+        }
+
+        private void confirmEditClick(TextBox temp, Button eb, Favourite f)
+        {
+            temp.ReadOnly = true;
+            eb.Text = "E";
+            eb.ForeColor = Color.Blue;
+            favs.changeFavName(f, temp.Text);
+            eb.Click += (s, e) => editButtonClick(temp, eb, f);
         }
 
         public void updateFavourites()
@@ -133,7 +170,7 @@ namespace WebBrowser
             initNewTab();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void removeTabBtn_Click(object sender, EventArgs e)
         {
             tabControl1.Controls.Remove(tabControl1.SelectedTab);
         }

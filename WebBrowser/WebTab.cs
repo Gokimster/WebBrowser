@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace WebBrowser
 {
@@ -15,8 +16,10 @@ namespace WebBrowser
         History history;
         Favourites favs;
         HomePage hp;
+        BackgroundWorker worker;
         public WebTab(Favourites favs, HomePage hp)
         {
+            worker = new BackgroundWorker();
             this.favs = favs;
             this.hp = hp;
             InitializeComponent();
@@ -30,7 +33,7 @@ namespace WebBrowser
             string pageUrl = hp.getHomePageUrl();
             if (pageUrl != null)
             {
-                loadPage(pageUrl);
+                worker.RunWorkerAsync(pageUrl);
                 addPageToHistory(pageUrl);
             }
         }
@@ -79,7 +82,7 @@ namespace WebBrowser
             if (e.KeyCode == Keys.Enter)
             {
                 addPageToHistory(address.Text);
-                loadPage(address.Text);
+                worker.RunWorkerAsync(address.Text);
             }
         }
         private void address_GotFocus(object sender, KeyEventArgs e)
@@ -121,8 +124,22 @@ namespace WebBrowser
 
         private void fwdBtn_Click(object sender, EventArgs e)
         {
-            loadPage(history.goToNext());
+            worker.RunWorkerAsync(history.goToNext());
         }
         
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = WebManager.getPage((string)e.Argument);
+        }
+
+        private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            loadPageWorker((string)e.Result);
+        }
+
+        private void loadPageWorker(string html)
+        {
+            pageContent.Text = html;
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace WebBrowser
+﻿using System.ComponentModel;
+
+namespace WebBrowser
 {
     partial class WebTab
     {
@@ -37,6 +39,11 @@
             this.favNameBox = new System.Windows.Forms.TextBox();
             this.pageContent = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
+            // 
+            // worker
+            // 
+            this.worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            this.worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
             // 
             // address
             // 

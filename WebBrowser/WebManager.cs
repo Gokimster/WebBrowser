@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace WebBrowser
 {
     public static class WebManager
     {
+
+        //return the html of a page given its url
         public static string getPage(string address)
         {
             try {
@@ -35,6 +34,7 @@ namespace WebBrowser
                     readStream.Close();
                     return data;
                 }
+            //if couldn't get the response, return the messages of raised exceptions
             }catch (WebException e) {
                 return e.Message;
             }

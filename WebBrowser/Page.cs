@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace WebBrowser
 {
     public class Page
     {
         public string url { get; set; }
 
+        //creates a new page with a given url
         public Page(string url)
         {
             this.url = url;

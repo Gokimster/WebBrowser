@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace WebBrowser
 {
     public class History
     {
+        //----------------------------------------//
+        //----------Fieds-------------------------//
+        //----------------------------------------//
         private LinkedList<Page> tabHistory;
         private LinkedListNode<Page> current;
 
@@ -19,18 +17,24 @@ namespace WebBrowser
             current = new LinkedListNode<Page>(null);
         }
 
+        //----------------------------------------//
+        //----------Methods-----------------------//
+        //----------------------------------------//
+
+        //create and add a new page to the history given an url
+        //only adds it if it's not the current loaded page
         public bool addPage(string url)
         {
             Page s = new Page(url);
             if (current.Value != null && !(current.Value.url.Equals(url)))
             {
-                tabHistory.AddBefore(current, s);
-                current = current.Previous;
+                tabHistory.AddAfter(current, s);
+                current = current.Next;
                 //resets tab history to only contain previous pages from the new current node
                 //removes forward history
-                while(!tabHistory.First.Equals(current))
+                while(!tabHistory.Last.Equals(current))
                 {
-                    tabHistory.RemoveFirst();
+                    tabHistory.RemoveLast();
                 }
                 return true;
             }
@@ -46,25 +50,24 @@ namespace WebBrowser
             return false;
         }
 
+        //checks if there is a previous node to go from the current one
         public bool canGoToPrevious()
         {
-            //checks the next element because previous pages are
-            //thowards the tail of the linked list
-            return (current.Next != null);
-        }
-
-        public bool canGoToNext()
-        {
-            //checks previous element because next/forward pages are
-            //thowards the head of the linked list
             return (current.Previous != null);
         }
 
+        //checks if there is a next node to go from the current one
+        public bool canGoToNext()
+        {
+            return (current.Next != null);
+        }
+
+        //sets the current node to the previous one and return the url associated with it
         public string goToPrevious()
         {
             if(canGoToPrevious())
             {
-                current = current.Next;
+                current = current.Previous;
                 return current.Value.url;
             }
             else
@@ -73,11 +76,12 @@ namespace WebBrowser
             }
         }
 
+        //sets the current node to the next one and return the url associated with it
         public string goToNext()
         {
             if (canGoToNext())
             {
-                current = current.Previous;
+                current = current.Next;
                 return current.Value.url;
             }
             else

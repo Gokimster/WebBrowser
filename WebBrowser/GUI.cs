@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WebBrowser
@@ -116,7 +110,7 @@ namespace WebBrowser
             x.Left = 0;
         }
 
-        //style for text box with the favourite name
+        //style for text box in favourites item of drop down menu
         private void initFavBox(TextBox b)
         {
             b.AutoSize = true;
@@ -125,6 +119,7 @@ namespace WebBrowser
             b.BackColor = b.Parent.BackColor;
         }
 
+        //style for drop down menu button
         private void initMenuButton(Button b)
         {
             b.AutoSize = true;
@@ -133,6 +128,7 @@ namespace WebBrowser
             b.BackColor = b.Parent.BackColor;
         }
 
+        //style for edit button in the favourites menu items
         private void initEditButton(Button b)
         {
             b.Text = "E";
@@ -142,6 +138,7 @@ namespace WebBrowser
             b.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
+        //make favourite name editable and change the button to a confirm button
         private void editButtonClick(TextBox temp, Button eb, Favourite f)
         {
             temp.ReadOnly = false;
@@ -150,6 +147,7 @@ namespace WebBrowser
             eb.Click += (s, e) => confirmEditClick(temp, eb, f);
         }
 
+        //save changes to favourite name and change the button back to the edit button
         private void confirmEditClick(TextBox temp, Button eb, Favourite f)
         {
             temp.ReadOnly = true;
@@ -159,18 +157,21 @@ namespace WebBrowser
             eb.Click += (s, e) => editButtonClick(temp, eb, f);
         }
 
+        //update favourites drop down menu
         public void updateFavourites()
         {
             favMenu.DropDownItems.Clear();
             populateFavourites();
         }
 
+        //update history drop down menu
         public void updateHistory()
         {
             historyMenu.DropDownItems.Clear();
             populateHistory();
         }
 
+        //add history pages to the history drop down menu
         private void populateHistory()
         {
             foreach (Page p in bHistory.browserHistory)
@@ -178,6 +179,8 @@ namespace WebBrowser
                 addPageToHistoryMenu(p);
             }
         }
+
+        //add favourites to the drop down menu
         private void populateFavourites()
         {
             foreach (Favourite f in favs.getFavourites().Values)
@@ -190,21 +193,25 @@ namespace WebBrowser
         //----------Events------------------------//
         //----------------------------------------//
 
+        //creates a new tab when clicked
         private void newTabMenuItem_Click(object sender, EventArgs e)
         {
             initNewTab();
         }
 
+        //creates a new tab when clicked
         private void addTabBtn_Click(object sender, EventArgs e)
         {
             initNewTab();
         }
 
+        //remove the currently selected tab when clicked
         private void removeTabBtn_Click(object sender, EventArgs e)
         {
             tabControl1.Controls.Remove(tabControl1.SelectedTab);
         }
 
+        //clears the browser history and updates the history menu when clicked
         private void clearHistory_Click(object sender, EventArgs e)
         {
             bHistory.clearBrowserHistory();

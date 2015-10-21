@@ -1,18 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Xml.Linq;
 
 namespace WebBrowser
 {
     public class PersistenceMgr
     {
+        //----------------------------------------//
+        //----------Fieds-------------------------//
+        //----------------------------------------//
         protected XElement xmlElem;
         protected string fileName;
 
+        //----------------------------------------//
+        //----------Methods-----------------------//
+        //----------------------------------------//
+
+        //creates a new document, initialize it as an xml adn save it 
+        //with a given name
         protected void createXMLDoc(string name)
         {
             XNamespace empNM = "urn:lst-emp:emp";
@@ -32,7 +36,8 @@ namespace WebBrowser
             }
         }
 
-        protected XElement initXML(string name) 
+        //initialize the fields and load the xml file or create it if it doesn't exist
+        protected void initXML(string name) 
         {
             fileName = "..\\..\\"+name+".xml";
             try
@@ -44,7 +49,6 @@ namespace WebBrowser
                 createXMLDoc(name);
                 xmlElem = XElement.Load(fileName);
             }
-            return xmlElem;
         }
 
     }

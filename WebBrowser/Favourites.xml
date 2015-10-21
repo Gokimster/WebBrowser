@@ -10,4 +10,9 @@
     <Url>http://google.com</Url>
     <Name>Hello</Name>
   </Favourite>
+  <Favourite xmlns="">
+    <Id>2095250047</Id>
+    <Url>http://google.com</Url>
+    <Name>Google</Name>
+  </Favourite>
 </Favourites>

@@ -49,6 +49,8 @@
     <Compile Include="BrowserHistory.cs" />
     <Compile Include="History.cs" />
     <Compile Include="HomePage.cs" />
+    <Compile Include="NoNextPageException.cs" />
+    <Compile Include="NoPreviousPageException.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="PersistenceMgr.cs" />
     <Compile Include="Favourite.cs" />

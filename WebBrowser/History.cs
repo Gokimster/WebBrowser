@@ -72,7 +72,7 @@ namespace WebBrowser
             }
             else
             {
-                throw new Exception("No previous Page to go to Exception");
+                throw new NoPreviousPageException("No previous Page to go to.");
             }
         }
 
@@ -86,7 +86,7 @@ namespace WebBrowser
             }
             else
             {
-                throw new Exception("No next Page to go to Exception");
+                throw new NoNextPageException("No next Page to go to.");
             }
         }
     }

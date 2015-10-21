@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 
 namespace WebBrowser
@@ -11,7 +12,8 @@ namespace WebBrowser
         //return the html of a page given its url
         public static string getPage(string address)
         {
-            try {
+            try
+            {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(address);
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -34,15 +36,37 @@ namespace WebBrowser
                     readStream.Close();
                     return data;
                 }
+            }
             //if couldn't get the response, return the messages of raised exceptions
-            }catch (WebException e) {
-                return e.Message;
+            catch (WebException e)
+            {
+                var response = e.Response as HttpWebResponse;
+
+                //return status code messages 
+                if (response?.StatusCode == HttpStatusCode.BadRequest)
+                {
+                    return "400 Bad Request";
+                }
+                else
+                {
+                    if (response?.StatusCode == HttpStatusCode.Forbidden)
+                    {
+                        return "403 Forbidden";
+                    }
+                    else
+                    {
+                        if (response?.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            return "404 Not Found";
+                        }
+                    }
+                }
             }
             catch (UriFormatException e)
             {
                 return e.Message;
             }
-            return "error";
+            return "Unahandled error";
         }
     }
 }

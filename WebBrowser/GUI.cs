@@ -10,20 +10,18 @@ namespace WebBrowser
         //----------------------------------------//
         //----------Fieds-------------------------//
         //----------------------------------------//
-        private Favourites favs;
-        private HomePage hp;
+        public Favourites favs { get; private set;}
+        public HomePage hp { get; private set; }
         public BrowserHistory bHistory { get; private set; }
-        private ArrayList tabs;
 
         public GUI()
         {
             InitializeComponent();
-            tabs = new ArrayList();
             favs = new Favourites();
             bHistory = new BrowserHistory();
+            hp = new HomePage();
             populateFavourites();
             populateHistory();
-            hp = new HomePage();
             initNewTab();
         }
 
@@ -35,20 +33,22 @@ namespace WebBrowser
         private void initNewTab()
         {
             TabPage tab = new TabPage();
-            WebTab x = new WebTab(favs, hp);
+            WebTab x = new WebTab();
             tab.Controls.Add(x);
             tabControl1.Controls.Add(tab);
             tab.Text = "Tab " + tabControl1.Controls.Count;
+            x.loadHomePage();
         }
 
         //create a new tab which loads a given url
         private void initNewTab(string url)
         {
             TabPage tab = new TabPage();
-            WebTab x = new WebTab(favs, hp, url);            
+            WebTab x = new WebTab();
             tab.Controls.Add(x);
             tabControl1.Controls.Add(tab);
             tab.Text = "Tab " + tabControl1.Controls.Count;
+            x.loadPage(url);
         }
 
         //dynamically add an item to the history drop down menu

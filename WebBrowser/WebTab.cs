@@ -10,8 +10,6 @@ namespace WebBrowser
         //----------Fields-------------//
         //-----------------------------//
         private History history;
-        private Favourites favs;
-        private HomePage hp;
         private BackgroundWorker worker;
         private string workerNextURL;
 
@@ -20,19 +18,9 @@ namespace WebBrowser
         //-----------------------------//
 
         //make a new tab and load the home page url
-        public WebTab(Favourites favs, HomePage hp)
+        public WebTab()
         {
-            initTab(favs, hp);
-            loadHomePage();
-            updateButtons();
-        }
-
-        //make a new tab and load a given page url
-        public WebTab(Favourites favs, HomePage hp, string url)
-        {
-            initTab(favs, hp);
-            loadPage(url);
-            updateButtons();
+            initTab();
         }
 
         //-----------------------------//
@@ -40,12 +28,10 @@ namespace WebBrowser
         //-----------------------------//
 
         //initialise main components for a new tab
-        private void initTab(Favourites favs, HomePage hp)
+        private void initTab()
         {
             workerNextURL = null;
             worker = new BackgroundWorker();
-            this.favs = favs;
-            this.hp = hp;
             InitializeComponent();
             history = new History();
         }
@@ -53,7 +39,7 @@ namespace WebBrowser
         //load the browser home page
         public void loadHomePage()
         {
-            string pageUrl = hp.getHomePageUrl();
+            string pageUrl = ((GUI)this.ParentForm)?.hp.getHomePageUrl();
             if (pageUrl != null)
             {
                 loadPage(pageUrl);
@@ -102,13 +88,13 @@ namespace WebBrowser
         //adds current page to favourites with the name given in the favourite name box
         private void favBtn_Click(object sender, EventArgs e)
         {
-            favs.addFavourite(address.Text, favNameBox.Text);
+            ((GUI)this.ParentForm)?.favs.addFavourite(address.Text, favNameBox.Text);
             favNameBox.Text = "Favourite Name";
             updateFavourites();
         }
 
         //loads new page onto the tabe given an url
-        private void loadPage(string url)
+        public void loadPage(string url)
         {
             //update buttons even if worker is busy to disable back/forward buttons 
             //if pressed repeatedly
@@ -143,7 +129,7 @@ namespace WebBrowser
         //sets home page to the current page in the tab
         private void homeBtn_Click(object sender, EventArgs e)
         {
-            hp.setHomePage(address.Text);
+            ((GUI)this.ParentForm)?.hp.setHomePage(address.Text);
         }
 
         //loads previous page in history

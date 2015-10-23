@@ -13,11 +13,7 @@ namespace WebBrowser
         private BackgroundWorker worker;
         private string workerNextURL;
 
-        //-----------------------------//
-        //----------Constructors-------//
-        //-----------------------------//
-
-        //make a new tab and load the home page url
+        //make a new tab
         public WebTab()
         {
             initTab();

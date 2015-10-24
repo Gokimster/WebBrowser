@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 
 namespace WebBrowser
@@ -66,7 +65,11 @@ namespace WebBrowser
             {
                 return e.Message;
             }
-            return "Unahandled error";
+            catch (NotSupportedException e)
+            {
+                return e.Message;
+            }
+            return "Unhandled error";
         }
     }
 }
